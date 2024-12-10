@@ -31,6 +31,8 @@ struct BraceletCus{
     BraceletCus(string n, string c) { name = n; color = c; }
 };
 
+//creating customer struct for 
+
 //functions for coffee booth
 void addcustomer(Node*&, string s, string d);
 void servecustomer(Node*&);
