@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdlib>
 #include <deque>
+#include <vector>
 using namespace std;
 
 //creating customer struct for coffee booth
@@ -23,6 +24,13 @@ struct MuffinCustomer{
     MuffinCustomer(string n, string m) { name = n; muffin = m; }
 };
 
+//creating customer struct for bracelet booth
+struct BraceletCus{
+    string name;
+    string color;
+    BraceletCus(string n, string c) { name = n; color = c; }
+};
+
 //functions for coffee booth
 void addcustomer(Node*&, string s, string d);
 void servecustomer(Node*&);
@@ -32,6 +40,11 @@ void displayline(Node*&); //call in each round
 void addmuffincus(deque<MuffinCustomer>& muffinLine, string name, string muffin);
 void servemuffincus(deque<MuffinCustomer>& muffinLine);
 void displaymuffinline(deque<MuffinCustomer>& muffinLine);
+
+//functions for bracelet booth
+void addbraceletcus(vector<BraceletCus>& braceletLine, string name, string color);
+void servebraceletcus(vector<BraceletCus>& braceletLine);
+void displaybraceletline(vector<BraceletCus>& braceletLine);
 
 
 int main() {
@@ -44,6 +57,7 @@ int main() {
     //objects
     Node* coffeeLine;
     deque<MuffinCustomer> muffinLine;
+    vector<BraceletCus>& braceletLine;
 
     //initializing for coffee
     for (int initialq = 0; initialq < 3; initialq++) {
@@ -133,7 +147,7 @@ void servecustomer(Node*& head){
         return;
     }
     Node* temp = head;
-    cout << "Customer: " << temp->name << " is served | " << temp->drinkOrder << endl;
+    cout << "Customer: " << temp->name << " | " << temp->drinkOrder << endl;
     head = head->next;
     delete temp;
 }
@@ -174,5 +188,24 @@ void displaymuffinline(deque<MuffinCustomer>& muffinLine) {
     cout << "\tCustomer name | Muffin order\n";
     for (auto customer : muffinLine) {
         cout << "\t" << customer.name << " | " << customer.muffin << endl;
+    }
+}
+
+//functions for bracelet booth
+void addbraceletcus(vector<BraceletCus>& braceletLine, string name, string color){
+    braceletLine.push_back(BraceletCus(name, color));
+    cout << "Customer joined bracelet line: " << name << " | " << color << endl;
+}
+void servebraceletcus(vector<BraceletCus>& braceletLine){
+    if (braceletLine.empty()){
+        return;
+    }
+    BraceletCus head = braceletLine.front();
+    cout << "Customer: " << head.name << " | " << head.color << endl;
+    braceletLine.erase(braceletLine.begin());
+}
+void displaybraceletline(vector<BraceletCus>& braceletLine){
+    if (braceletLine.empty()) {
+        cout << "Bracelet "
     }
 }
