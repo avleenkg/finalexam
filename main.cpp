@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <deque>
 #include <vector>
+#include <set>
 using namespace std;
 
 //creating customer struct for coffee booth
@@ -31,7 +32,12 @@ struct BraceletCus{
     BraceletCus(string n, string c) { name = n; color = c; }
 };
 
-//creating customer struct for 
+//creating customer struct for my choice - stationary booth
+struct StationaryCus{
+    string name;
+    string types;
+    StationaryCus(string n, string t) { name = n; types = t; }
+};
 
 //functions for coffee booth
 void addcustomer(Node*&, string s, string d);
@@ -48,6 +54,11 @@ void addbraceletcus(vector<BraceletCus>& braceletLine, string name, string color
 void servebraceletcus(vector<BraceletCus>& braceletLine);
 void displaybraceletline(vector<BraceletCus>& braceletLine);
 
+//functions for stationary booth
+void addstationarycus(set<StationaryCus>& stationaryLine, string name, string type);
+void servestationarycus(set<StationaryCus>& stationaryLine);
+void displaystationaryline(set<StationaryCus>& stationaryLine);
+
 
 int main() {
     srand(time(0));
@@ -56,6 +67,7 @@ int main() {
     string drinks[24] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte", "Mocha", "Espresso", "Cappuccino", "Chai Latte", "Flat White", "Macchiato", "Cold Brew", "Honey Latte", "Matcha Latte", "Iced Coffee", "Turmeric Latte", "Irish Coffee", "Peach Tea", "Lemonade", "Raspberry Iced Tea", "Coconut Milk Latte"};
     string muffins[22] = {"Blueberry", "Chocolate Chip", "Banana", "Cinnamon", "Vanilla", "Lemon Icing", "Chocolate", "Apple Cinnamon", "Raisin", "Strawberry", "Carrot", "Poppy Seed", "Pumpkin", "Maple Pecan", "Peach", "Orange", "Peanut Butter", "Cherry", "Lemon Poppy", "Almond", "Oatmeal", "Zucchini"};
     string braceletcolors[26] = {"Blue", "Red", "Pink", "Aqua", "Beige", "Cream", "Brown", "Black", "Gray", "White", "Purple", "Turquoise", "Yellow", "Green", "Orange", "Silver", "Gold", "Copper", "Lavender", "Fuchsia", "Emerald", "Teal", "Ivory", "Maroon", "Coral", "Charcoal"};
+    
     
     //objects
     Node* coffeeLine = nullptr;
@@ -238,6 +250,32 @@ void displaybraceletline(vector<BraceletCus>& braceletLine){
     cout << "\tCustomer name | Bracelet color\n";
     for (auto customer : braceletLine) {
         cout << "\t" << customer.name << " | " << customer.color << endl;
+    }
+    cout << endl;
+}
+
+//functions for stationary booth
+void addstationarycus(set<StationaryCus>& stationaryLine, string name, string types){
+    stationaryLine.insert(StationaryCus(name, types));
+    cout << "Customer joined stationary line: " << name << " | " << types << endl;
+}
+void servestationarycus(set<StationaryCus>& stationaryLine){
+    if (stationaryLine.empty()){
+        return;
+    }
+    auto it = stationaryLine.begin();
+    cout << "Customer: " << it->name << " | " << it->types << endl;
+    stationaryLine.erase(it);
+}
+void displaystationaryline(set<StationaryCus>& stationaryLine){
+    if (stationaryLine.empty()) {
+        cout << "Stationary line is currently empty.\n";
+        return;
+    }
+    cout << "Current stationary line queue:\n";
+    cout << "\tCustomer name | Stationary order\n";
+    for (auto customer : stationaryLine) {
+        cout << "\t" << customer.name<< " | " << customer.types << endl;
     }
     cout << endl;
 }
