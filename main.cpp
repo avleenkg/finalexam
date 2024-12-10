@@ -77,9 +77,6 @@ int main() {
         else {
             cout << "Line is currently empty.\n";
         }
-        if (prob < 50) {
-            addcustomer(coffeeLine, randname, randdrink);
-        }
 
         //muffin line
         if (!muffinLine.empty()) {
@@ -90,7 +87,24 @@ int main() {
             cout << "Line is currently empty.\n";
         }
 
-        displayline(coffeeLine);
+        //combined
+        if (prob < 50) {
+            //generate random for coffee
+            string randcoffeename = names[rand() % 14];
+            string randdrink = drinks[rand() % 8];
+            addcustomer(coffeeLine, randname, randdrink);
+
+            //generate random for muffin
+            string randmuffinname = names[rand() % 14];
+            string randmuffin = muffins[rand() % 7];
+            addmuffincus(muffinLine, randname, randmuffin);
+        }
+
+        //display
+        cout << "Displaying...\n";
+        displayline(coffeeLine); cout << endl;
+        displaymuffinline(muffinLine); cout << endl;
+
         cout << endl;
     }
 
@@ -125,11 +139,11 @@ void servecustomer(Node*& head){
 }
 void displayline(Node*& head) {
     if (!head) {
-        cout << "Line is empty.\n";
+        cout << "Coffee line is empty.\n";
         return;
     }
     Node* temp = head;
-    cout << "Current line queue:\n";
+    cout << "Current coffee line queue:\n";
     cout << "\tCustomer name | Drink order\n";
     while (temp) {
         cout << "\t" << temp->name << " | " << temp->drinkOrder << endl;
@@ -153,10 +167,10 @@ void servemuffincus(deque<MuffinCustomer>& muffinLine) {
 }
 void displaymuffinline(deque<MuffinCustomer>& muffinLine) {
     if (muffinLine.empty()) {
-        cout << "Line currently empty.\n";
+        cout << "Muffin line currently empty.\n";
         return;
     }
-    cout << "Current line queue:\n";
+    cout << "Current muffin line queue:\n";
     cout << "\tCustomer name | Muffin order\n";
     for (auto customer : muffinLine) {
         cout << "\t" << customer.name << " | " << customer.muffin << endl;
