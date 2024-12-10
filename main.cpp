@@ -10,10 +10,9 @@ struct Node {
     Node* next;
 
     string names[] = {"Alice", "Bob", "Ava", "Emily", "John", "Henry", "Frank", "Marc"};
-    
+
 };
 
-struct linkedlist
 
 int main() {
 
