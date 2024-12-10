@@ -53,7 +53,8 @@ int main() {
     string names[14] = {"Alice", "Bob", "Ava", "Emily", "John", "Henry", "Frank", "Marc", "Angel", "Angela", "Elizabeth", "Sierra", "Aaron", "Emery"};
     string drinks[8] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte"};
     string muffins[7] = {"Blueberry", "Chocolate Chip", "Banana", "Cinnamon", "Vanilla", "Lemon Icing", "Chocolate"};
-
+    string braceletcolors[10] = {"Blue", "Red", "Pink", "Aqua", "Beige", "Cream", "Brown", "Black", "Gray", "White"};
+    
     //objects
     Node* coffeeLine;
     deque<MuffinCustomer> muffinLine;
@@ -66,12 +67,19 @@ int main() {
 
         addcustomer(coffeeLine, randname, randdrink);
     }
-     //initializing for muffin
+    //initializing for muffin
     for (int initialq = 0; initialq < 3; initialq++) {
         string randname = names[rand() % 14];
         string randmuffin = muffins[rand() % 7];
 
         addmuffincus(muffinLine, randname, randmuffin);
+    }
+    //initializing for bracelets
+    for (int initialq = 0; initialq < 3; initialq++) {
+        string randname = names[rand() % 14];
+        string randcolor = braceletcolors[rand() % 10];
+
+        addbraceletcus(braceletLine, randname, randcolor);
     }
 
     int prob = rand() % 100;
@@ -82,23 +90,33 @@ int main() {
         string randname = names[rand() % 14];
         string randdrink = drinks[rand() % 8];
         string randmuffin = muffins[rand() % 7];
+        string randcolor = braceletcolors[rand() % 10];
 
         //coffee line
         if (coffeeLine) {
-            cout << "Serving customer:\n";
+            cout << "Serving coffee customer:\n";
             servecustomer(coffeeLine);
         }
         else {
-            cout << "Line is currently empty.\n";
+            cout << "Coffee line is currently empty.\n";
         }
 
         //muffin line
         if (!muffinLine.empty()) {
-            cout << "Serving customer:\n";
+            cout << "Serving muffin customer:\n";
             servemuffincus(muffinLine);
         }
         else {
-            cout << "Line is currently empty.\n";
+            cout << "Muffin line is currently empty.\n";
+        }
+
+        //bracelet booth
+        if (!braceletLine.empty()) {
+            cout << "Serving bracelet customer:\n";
+            servebraceletcus(braceletLine);
+        }
+        else {
+            cout << "Bracelet line is currently empty.\n";
         }
 
         //combined
@@ -206,6 +224,13 @@ void servebraceletcus(vector<BraceletCus>& braceletLine){
 }
 void displaybraceletline(vector<BraceletCus>& braceletLine){
     if (braceletLine.empty()) {
-        cout << "Bracelet "
+        cout << "Bracelet line is currently empty.\n";
+        return;
     }
+    cout << "Current bracelet line queue:\n";
+    cout << "\tCustomer name | Bracelet color\n";
+    for (auto customer : braceletLine) {
+        cout << "\t" << customer.name << " | " << customer.color << endl;
+    }
+    cout << endl;
 }
