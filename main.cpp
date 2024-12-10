@@ -23,12 +23,12 @@ void displayline(Node*&); //call in each round
 int main() {
     srand(time(0));
 
-    string names[8] = {"Alice", "Bob", "Ava", "Emily", "John", "Henry", "Frank", "Marc"};
+    string names[14] = {"Alice", "Bob", "Ava", "Emily", "John", "Henry", "Frank", "Marc", "Angel", "Angela", "Elizabeth", "Sierra", "Aaron", "Emery"};
     string drinks[8] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte"};
 
     Node* coffeeLine;
     for (int initialq = 0; initialq < 3; initialq++) {
-        string randname = names[rand() % 8];
+        string randname = names[rand() % 14];
         string randdrink = drinks[rand() % 8];
 
         addcustomer(coffeeLine, randname, randdrink);
@@ -36,6 +36,9 @@ int main() {
     int prob = rand() % 100;
     for (int rounds = 0; rounds < 10; rounds++) {
         cout << "-------Round " << rounds + 1 << "-------\n";
+
+        string randname = names[rand() % 14];
+        string randdrink = drinks[rand() % 8];
 
         if (coffeeLine) {
             cout << "Serving customer:\n";
@@ -45,11 +48,12 @@ int main() {
             cout << "Line is currently empty.\n";
         }
         if (prob < 50) {
-            addcustomer(coffeeLine, rand)
+            addcustomer(coffeeLine, randname, randdrink);
         }
+
+        displayline(coffeeLine);
+        cout << endl;
     }
-
-
 
 
     return 0;
@@ -68,6 +72,7 @@ void addcustomer(Node*& head, string name, string drink){
         }
         temp->next = newNode;
     }
+    cout << "Customer joined line: " << newNode->name << " | " << newNode->drinkOrder << endl;
 }
 void servecustomer(Node*& head){
     if (!head) {
