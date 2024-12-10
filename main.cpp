@@ -29,8 +29,8 @@ void servecustomer(Node*&);
 void displayline(Node*&); //call in each round
 
 //functions for muffin booth
-void addmuffincus;
-void servemuffincus;
+void addmuffincus(deque<MuffinCustomer>& muffinLine, string name, string muffin);
+void servemuffincus(deque<MuffinCustomer>& muffinLine);
 void displaymuffinline;
 
 
@@ -39,6 +39,7 @@ int main() {
 
     string names[14] = {"Alice", "Bob", "Ava", "Emily", "John", "Henry", "Frank", "Marc", "Angel", "Angela", "Elizabeth", "Sierra", "Aaron", "Emery"};
     string drinks[8] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte"};
+    string muffins[7] = {"Blueberry", "Chocolate Chip", "Banana", "Cinnamon", "Vanilla", "Lemon Icing", "Chocolate"};
 
     Node* coffeeLine;
     for (int initialq = 0; initialq < 3; initialq++) {
@@ -73,6 +74,7 @@ int main() {
     return 0;
 }
 
+//functions for coffee booth
 void addcustomer(Node*& head, string name, string drink){
     Node* newNode = new Node(name, drink);
 
@@ -109,4 +111,17 @@ void displayline(Node*& head) {
         temp = temp->next;
     }
     cout << endl;
+}
+
+//functions for muffin booth
+void addmuffincus(deque<MuffinCustomer>& muffinLine, string name, string muffin) {
+    muffinLine.push_back(MuffinCustomer(name, muffin));
+    cout << "Customer joined muffin line: " << name << " | " << muffin << endl;
+}
+void servemuffincus(deque<MuffinCustomer>& muffinLine) {
+    if (muffinLine.empty()) {
+        return;
+    }
+    MuffinCustomer head = muffinLine.front();
+    cout << "Customer served at muffin booth:"
 }
