@@ -31,7 +31,7 @@ void displayline(Node*&); //call in each round
 //functions for muffin booth
 void addmuffincus(deque<MuffinCustomer>& muffinLine, string name, string muffin);
 void servemuffincus(deque<MuffinCustomer>& muffinLine);
-void displaymuffinline;
+void displaymuffinline(deque<MuffinCustomer>& muffinLine);
 
 
 int main() {
@@ -41,20 +41,35 @@ int main() {
     string drinks[8] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte"};
     string muffins[7] = {"Blueberry", "Chocolate Chip", "Banana", "Cinnamon", "Vanilla", "Lemon Icing", "Chocolate"};
 
+    //objects
     Node* coffeeLine;
+    deque<MuffinCustomer> muffinLine;
+
+    //initializing for coffee
     for (int initialq = 0; initialq < 3; initialq++) {
         string randname = names[rand() % 14];
         string randdrink = drinks[rand() % 8];
 
         addcustomer(coffeeLine, randname, randdrink);
     }
+     //initializing for muffin
+    for (int initialq = 0; initialq < 3; initialq++) {
+        string randname = names[rand() % 14];
+        string randmuffin = muffins[rand() % 7];
+
+        addmuffincus(muffinLine, randname, randmuffin);
+    }
+
     int prob = rand() % 100;
+
     for (int rounds = 0; rounds < 10; rounds++) {
         cout << "-------Round " << rounds + 1 << "-------\n";
 
         string randname = names[rand() % 14];
         string randdrink = drinks[rand() % 8];
+        string randmuffin = muffins[rand() % 7];
 
+        //coffee line
         if (coffeeLine) {
             cout << "Serving customer:\n";
             servecustomer(coffeeLine);
@@ -64,6 +79,15 @@ int main() {
         }
         if (prob < 50) {
             addcustomer(coffeeLine, randname, randdrink);
+        }
+
+        //muffin line
+        if (!muffinLine.empty()) {
+            cout << "Serving customer:\n";
+            servemuffincus(muffinLine);
+        }
+        else {
+            cout << "Line is currently empty.\n";
         }
 
         displayline(coffeeLine);
@@ -106,6 +130,7 @@ void displayline(Node*& head) {
     }
     Node* temp = head;
     cout << "Current line queue:\n";
+    cout << "\tCustomer name | Drink order\n";
     while (temp) {
         cout << "\t" << temp->name << " | " << temp->drinkOrder << endl;
         temp = temp->next;
@@ -123,5 +148,17 @@ void servemuffincus(deque<MuffinCustomer>& muffinLine) {
         return;
     }
     MuffinCustomer head = muffinLine.front();
-    cout << "Customer served at muffin booth:"
+    cout << "Customer: " << head.name << " | " << head.muffin << endl;
+    muffinLine.pop_front();
+}
+void displaymuffinline(deque<MuffinCustomer>& muffinLine) {
+    if (muffinLine.empty()) {
+        cout << "Line currently empty.\n";
+        return;
+    }
+    cout << "Current line queue:\n";
+    cout << "\tCustomer name | Muffin order\n";
+    for (auto customer : muffinLine) {
+        cout << "\t" << customer.name << " | " << customer.muffin << endl;
+    }
 }
