@@ -37,6 +37,13 @@ struct StationaryCus{
     string name;
     string types;
     StationaryCus(string n, string t) { name = n; types = t; }
+
+    bool operator <(const StationaryCus& cus2) const {
+        if(name != cus2.name) {
+            return name < cus2.name;
+        }
+        return types < cus2.types;
+    }
 };
 
 //functions for coffee booth
@@ -67,12 +74,13 @@ int main() {
     string drinks[24] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte", "Mocha", "Espresso", "Cappuccino", "Chai Latte", "Flat White", "Macchiato", "Cold Brew", "Honey Latte", "Matcha Latte", "Iced Coffee", "Turmeric Latte", "Irish Coffee", "Peach Tea", "Lemonade", "Raspberry Iced Tea", "Coconut Milk Latte"};
     string muffins[22] = {"Blueberry", "Chocolate Chip", "Banana", "Cinnamon", "Vanilla", "Lemon Icing", "Chocolate", "Apple Cinnamon", "Raisin", "Strawberry", "Carrot", "Poppy Seed", "Pumpkin", "Maple Pecan", "Peach", "Orange", "Peanut Butter", "Cherry", "Lemon Poppy", "Almond", "Oatmeal", "Zucchini"};
     string braceletcolors[26] = {"Blue", "Red", "Pink", "Aqua", "Beige", "Cream", "Brown", "Black", "Gray", "White", "Purple", "Turquoise", "Yellow", "Green", "Orange", "Silver", "Gold", "Copper", "Lavender", "Fuchsia", "Emerald", "Teal", "Ivory", "Maroon", "Coral", "Charcoal"};
-    
-    
+    string stationarytypes[10] = {"Pencil", "Pen", "Paper", "Notebook", "Whiteout", "Lead", "Ink", "Mouse", "Keyboard", "Markers"};
+
     //objects
     Node* coffeeLine = nullptr;
     deque<MuffinCustomer> muffinLine;
     vector<BraceletCus> braceletLine;
+    set<StationaryCus> stationaryLine;
 
     //initializing for coffee
     for (int initialq = 0; initialq < 3; initialq++) {
@@ -95,6 +103,13 @@ int main() {
 
         addbraceletcus(braceletLine, randname, randcolor);
     }
+    //initializing for stationary
+    for (int initialq = 0; initialq < 3; initialq++) {
+        string randname = names[rand() % 29];
+        string randtype = stationarytypes[rand() % 10];
+
+        addstationarycus(stationaryLine, randname, randtype);
+    }
 
     int prob = rand() % 100;
 
@@ -105,6 +120,8 @@ int main() {
         string randdrink = drinks[rand() % 24];
         string randmuffin = muffins[rand() % 22];
         string randcolor = braceletcolors[rand() % 26];
+        string randtype = stationarytypes[rand() % 10];
+
 
         //coffee line
         if (coffeeLine) {
@@ -133,6 +150,15 @@ int main() {
             cout << "Bracelet line is currently empty.\n";
         }
 
+        //stationary booth
+        if (!stationaryLine.empty()) {
+            cout << "Serving stationary customer:\n";
+            servestationarycus(stationaryLine);
+        }
+        else {
+            cout << "Stationary line is currently empty.\n";
+        }
+
         //combined
         if (prob < 50) {
             //generate random for coffee
@@ -148,6 +174,10 @@ int main() {
             string randbraceletname = names[rand() % 29];
             string randbraceletcolor = braceletcolors[rand() % 26];
             addbraceletcus(braceletLine, randbraceletname, randbraceletcolor);
+
+            string randstationaryname = names[rand() % 26];
+            string randitemtype = stationarytypes[rand() % 10];
+            addstationarycus(stationaryLine, randstationaryname, randitemtype);
         }
 
         //display
@@ -155,6 +185,7 @@ int main() {
         displayline(coffeeLine); cout << endl;
         displaymuffinline(muffinLine); cout << endl;
         displaybraceletline(braceletLine); cout << endl;
+        displaystationaryline(stationaryLine); cout << endl;
 
         cout << endl;
     }
