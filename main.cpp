@@ -3,9 +3,10 @@
 #include <iostream>
 #include <string>
 #include <cstdlib>
+#include <deque>
 using namespace std;
 
-//creating customer struct
+//creating customer struct for coffee booth
 struct Node {
     string name;
     string drinkOrder;
@@ -15,9 +16,22 @@ struct Node {
     Node() {name = ""; drinkOrder = ""; next = nullptr;}
 };
 
+//creating customer struct for muffin booth
+struct MuffinCustomer{
+    string name;
+    string muffin;
+    MuffinCustomer(string n, string m) { name = n; muffin = m; }
+};
+
+//functions for coffee booth
 void addcustomer(Node*&, string s, string d);
 void servecustomer(Node*&);
 void displayline(Node*&); //call in each round
+
+//functions for muffin booth
+void addmuffincus;
+void servemuffincus;
+void displaymuffinline;
 
 
 int main() {
