@@ -13,14 +13,18 @@ struct Node {
     string drinks[8] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte"};
 
     Node(string n, string d) { name = n; drinkOrder = d; next = nullptr; }
+    Node() {name = ""; drinkOrder = ""; next = nullptr;}
 };
 
 void addcustomer(Node*&, string s, string d);
-void servecustomer;
-void displayline;
+void servecustomer(Node*&);
+void displayline(Node*&); //call in each round
 
 
 int main() {
+
+    Node coffeeLine;
+
 
 
 
@@ -35,6 +39,31 @@ void addcustomer(Node*& head, string name, string drink){
     }
     else {
         Node* temp = head;
-        w    
+        while (temp->next) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
     }
+}
+void servecustomer(Node*& head){
+    if (!head) {
+        return;
+    }
+    Node* temp = head;
+    cout << "Customer: " << temp->name << " is served | " << temp->drinkOrder << endl;
+    head = head->next;
+    delete temp;
+}
+void displayline(Node*& head) {
+    if (!head) {
+        cout << "Line is empty.\n";
+        return;
+    }
+    Node* temp = head;
+    cout << "Current line queue:\n";
+    while (temp) {
+        cout << "\t" << temp->name << " | " << temp->drinkOrder << endl;
+        temp = temp->next;
+    }
+    cout << endl;
 }
