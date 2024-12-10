@@ -50,34 +50,34 @@ void displaybraceletline(vector<BraceletCus>& braceletLine);
 int main() {
     srand(time(0));
 
-    string names[14] = {"Alice", "Bob", "Ava", "Emily", "John", "Henry", "Frank", "Marc", "Angel", "Angela", "Elizabeth", "Sierra", "Aaron", "Emery"};
-    string drinks[8] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte"};
-    string muffins[7] = {"Blueberry", "Chocolate Chip", "Banana", "Cinnamon", "Vanilla", "Lemon Icing", "Chocolate"};
-    string braceletcolors[10] = {"Blue", "Red", "Pink", "Aqua", "Beige", "Cream", "Brown", "Black", "Gray", "White"};
+    string names[29] = {"Alice", "Bob", "Ava", "Emily", "John", "Henry", "Frank", "Marc", "Angel", "Angela", "Elizabeth", "Sierra", "Aaron", "Emery", "Sophia", "James", "Michael", "Isabella", "Olivia", "Ethan", "Daniel", "Mia", "David", "Charlotte", "William", "Benjamin", "Amelia", "Lucas", "Madison"};
+    string drinks[24] = {"Latte", "Almondmilk Latte", "Green tea", "Iced tea", "Americano", "Caramel Frap", "Caramel Macchiato", "Vanilla latte", "Mocha", "Espresso", "Cappuccino", "Chai Latte", "Flat White", "Macchiato", "Cold Brew", "Honey Latte", "Matcha Latte", "Iced Coffee", "Turmeric Latte", "Irish Coffee", "Peach Tea", "Lemonade", "Raspberry Iced Tea", "Coconut Milk Latte"};
+    string muffins[22] = {"Blueberry", "Chocolate Chip", "Banana", "Cinnamon", "Vanilla", "Lemon Icing", "Chocolate", "Apple Cinnamon", "Raisin", "Strawberry", "Carrot", "Poppy Seed", "Pumpkin", "Maple Pecan", "Peach", "Orange", "Peanut Butter", "Cherry", "Lemon Poppy", "Almond", "Oatmeal", "Zucchini"};
+    string braceletcolors[26] = {"Blue", "Red", "Pink", "Aqua", "Beige", "Cream", "Brown", "Black", "Gray", "White", "Purple", "Turquoise", "Yellow", "Green", "Orange", "Silver", "Gold", "Copper", "Lavender", "Fuchsia", "Emerald", "Teal", "Ivory", "Maroon", "Coral", "Charcoal"};
     
     //objects
-    Node* coffeeLine;
+    Node* coffeeLine = nullptr;
     deque<MuffinCustomer> muffinLine;
-    vector<BraceletCus>& braceletLine;
+    vector<BraceletCus> braceletLine;
 
     //initializing for coffee
     for (int initialq = 0; initialq < 3; initialq++) {
-        string randname = names[rand() % 14];
-        string randdrink = drinks[rand() % 8];
+        string randname = names[rand() % 29];
+        string randdrink = drinks[rand() % 24];
 
         addcustomer(coffeeLine, randname, randdrink);
     }
     //initializing for muffin
     for (int initialq = 0; initialq < 3; initialq++) {
-        string randname = names[rand() % 14];
-        string randmuffin = muffins[rand() % 7];
+        string randname = names[rand() % 29];
+        string randmuffin = muffins[rand() % 22];
 
         addmuffincus(muffinLine, randname, randmuffin);
     }
     //initializing for bracelets
     for (int initialq = 0; initialq < 3; initialq++) {
-        string randname = names[rand() % 14];
-        string randcolor = braceletcolors[rand() % 10];
+        string randname = names[rand() % 29];
+        string randcolor = braceletcolors[rand() % 26];
 
         addbraceletcus(braceletLine, randname, randcolor);
     }
@@ -87,10 +87,10 @@ int main() {
     for (int rounds = 0; rounds < 10; rounds++) {
         cout << "-------Round " << rounds + 1 << "-------\n";
 
-        string randname = names[rand() % 14];
-        string randdrink = drinks[rand() % 8];
-        string randmuffin = muffins[rand() % 7];
-        string randcolor = braceletcolors[rand() % 10];
+        string randname = names[rand() % 29];
+        string randdrink = drinks[rand() % 24];
+        string randmuffin = muffins[rand() % 22];
+        string randcolor = braceletcolors[rand() % 26];
 
         //coffee line
         if (coffeeLine) {
@@ -122,20 +122,25 @@ int main() {
         //combined
         if (prob < 50) {
             //generate random for coffee
-            string randcoffeename = names[rand() % 14];
-            string randdrink = drinks[rand() % 8];
+            string randcoffeename = names[rand() % 29];
+            string randdrink = drinks[rand() % 24];
             addcustomer(coffeeLine, randname, randdrink);
 
             //generate random for muffin
-            string randmuffinname = names[rand() % 14];
-            string randmuffin = muffins[rand() % 7];
+            string randmuffinname = names[rand() % 29];
+            string randmuffin = muffins[rand() % 22];
             addmuffincus(muffinLine, randname, randmuffin);
+
+            string randbraceletname = names[rand() % 29];
+            string randbraceletcolor = braceletcolors[rand() % 26];
+            addbraceletcus(braceletLine, randbraceletname, randbraceletcolor);
         }
 
         //display
         cout << "Displaying...\n";
         displayline(coffeeLine); cout << endl;
         displaymuffinline(muffinLine); cout << endl;
+        displaybraceletline(braceletLine); cout << endl;
 
         cout << endl;
     }
@@ -158,7 +163,7 @@ void addcustomer(Node*& head, string name, string drink){
         }
         temp->next = newNode;
     }
-    cout << "Customer joined line: " << newNode->name << " | " << newNode->drinkOrder << endl;
+    cout << "Customer joined coffee line: " << newNode->name << " | " << newNode->drinkOrder << endl;
 }
 void servecustomer(Node*& head){
     if (!head) {
